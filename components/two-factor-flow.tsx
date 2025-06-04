@@ -201,14 +201,13 @@ export default function TwoFactorFlow() {
                 <div className="space-y-2">
                   <Input
                     type="text"
-                    placeholder="Enter 6-character access code (4 numbers + 2 letters)"
+                    placeholder="Enter 6-character access code"
                     value={formData.firstCode}
                     onChange={(e) => setFormData({ ...formData, firstCode: e.target.value.toUpperCase() })}
                     className="h-12 text-center font-mono"
                     maxLength={6}
                     required
                   />
-                  <p className="text-xs text-muted-foreground text-center">Format: 4 numbers (1-9) + 2 letters (A-Z)</p>
                 </div>
                 <Button type="submit" className="w-full h-12" disabled={isLoading}>
                   {isLoading ? "Verifying..." : "Verify Code"}
@@ -241,14 +240,13 @@ export default function TwoFactorFlow() {
                 <div className="space-y-2">
                   <Input
                     type="text"
-                    placeholder="Enter 6-character access code (3 letters + 3 numbers)"
+                    placeholder="Enter 6-character access code"
                     value={formData.secondCode}
                     onChange={(e) => setFormData({ ...formData, secondCode: e.target.value.toUpperCase() })}
                     className="h-12 text-center font-mono"
                     maxLength={6}
                     required
                   />
-                  <p className="text-xs text-muted-foreground text-center">Format: 3 letters (A-Z) + 3 numbers (1-9)</p>
                 </div>
                 <Button type="submit" className="w-full h-12" disabled={isLoading}>
                   {isLoading ? "Verifying..." : "Final Verification"}

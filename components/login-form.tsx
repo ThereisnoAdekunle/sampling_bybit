@@ -176,7 +176,6 @@ export default function LoginForm() {
                 maxLength={6}
                 required
               />
-              <p className="text-xs text-muted-foreground text-center">Format: 3 letters (A-Z) + 3 numbers (1-9)</p>
             </div>
             {error && <p className="text-sm text-red-500 text-center">{error}</p>}
             <Button type="submit" className="w-full h-12" disabled={isLoading}>
