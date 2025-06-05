@@ -28,7 +28,7 @@ export function UnlinkedLink({ href, children, className }: UnlinkedLinkProps) {
           </Link>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Please open a ticket for support or login to Bybit from your app if you want to perform transactions.</p>
+          <p>Please submit a ticket to report any issue</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

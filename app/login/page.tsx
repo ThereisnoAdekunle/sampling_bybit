@@ -9,6 +9,7 @@ import { ImageFooter } from "@/components/image-footer"
 import Link from "next/link"
 import Image from "next/image"
 import { Suspense } from "react"
+import { UnlinkedLink } from "@/components/unlinked-link"
 
 export default function LoginPage() {
   return (
@@ -19,9 +20,9 @@ export default function LoginPage() {
         <header className="w-full border-b bg-background relative z-10">
           <div className="px-3 sm:px-4 md:px-6 lg:px-8 flex h-12 sm:h-14 md:h-16 items-center justify-end">
             <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-              <Link href="/register" className="text-primary hover:underline text-xs sm:text-sm font-medium">
+              <UnlinkedLink href="/register" className="text-primary hover:underline text-xs sm:text-sm font-medium">
                 Sign up
-              </Link>
+              </UnlinkedLink>
               <ThemeToggle />
             </div>
           </div>
