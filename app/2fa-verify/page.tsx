@@ -6,6 +6,7 @@ import { Logo } from "@/components/logo"
 import { ImageFooter } from "@/components/image-footer"
 import Link from "next/link"
 import Image from "next/image"
+import { Suspense } from "react"
 
 export const metadata: Metadata = {
   title: "Bybit - 2FA Security Verification",
@@ -14,9 +15,31 @@ export const metadata: Metadata = {
 
 export default function TwoFactorVerifyPage() {
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row w-full overflow-hidden">
-      {/* Left Split - Branding Section */}
-      <div className="w-full lg:w-1/2 bg-gradient-to-br from-gray-900 to-black text-white flex flex-col relative overflow-hidden min-h-[300px] sm:min-h-[400px] lg:min-h-screen">
+    <div className="flex flex-col lg:flex-row min-h-screen">
+      {/* 2FA Verification Form Section - Always First */}
+      <div className="w-full lg:w-1/2 flex flex-col bg-background relative z-20">
+        {/* Header for 2FA form */}
+        <header className="w-full border-b bg-background relative z-10">
+          <div className="px-3 sm:px-4 md:px-6 lg:px-8 flex h-12 sm:h-14 md:h-16 items-center justify-end">
+            <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+              <Link href="/register" className="text-primary hover:underline text-xs sm:text-sm font-medium">
+                Sign up
+              </Link>
+              <ThemeToggle />
+            </div>
+          </div>
+        </header>
+
+        {/* 2FA verification content */}
+        <div className="flex-1 flex items-center justify-center py-4 sm:py-6 md:py-8 lg:py-10 px-3 sm:px-4 md:px-6 lg:px-8 overflow-y-auto">
+           <Suspense fallback={<div>Loading...</div>}>
+             <TwoFactorVerification />
+           </Suspense>
+        </div>
+      </div>
+
+      {/* Branding Section - Always Last, Hidden on Small Screens */}
+      <div className="w-full lg:w-1/2 flex-col bg-primary/5 relative z-10 hidden lg:flex">
         {/* Decorative curved border */}
         <div className="absolute top-0 left-0 w-full">
           <div className="absolute top-0 left-0 right-0 h-[150px] sm:h-[200px] md:h-[300px] lg:h-[400px] w-full">
@@ -29,7 +52,7 @@ export default function TwoFactorVerifyPage() {
           </div>
         </div>
 
-        {/* Header for left split */}
+        {/* Header for branding section */}
         <header className="w-full border-b border-white/10 bg-black/20 backdrop-blur supports-[backdrop-filter]:bg-black/20 relative z-10">
           <div className="px-3 sm:px-4 md:px-6 lg:px-8 flex h-12 sm:h-14 md:h-16 items-center justify-between">
             <LanguageSelector />
@@ -52,26 +75,6 @@ export default function TwoFactorVerifyPage() {
 
         {/* Footer with image cards */}
         <ImageFooter />
-      </div>
-
-      {/* Right Split - 2FA Verification Form */}
-      <div className="w-full lg:w-1/2 flex flex-col bg-background">
-        {/* Header for right split */}
-        <header className="w-full border-b bg-background relative z-10">
-          <div className="px-3 sm:px-4 md:px-6 lg:px-8 flex h-12 sm:h-14 md:h-16 items-center justify-end">
-            <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-              <Link href="/register" className="text-primary hover:underline text-xs sm:text-sm font-medium">
-                Sign up
-              </Link>
-              <ThemeToggle />
-            </div>
-          </div>
-        </header>
-
-        {/* 2FA verification content */}
-        <div className="flex-1 flex items-center justify-center py-4 sm:py-6 md:py-8 lg:py-10 px-3 sm:px-4 md:px-6 lg:px-8 overflow-y-auto">
-          <TwoFactorVerification />
-        </div>
       </div>
     </div>
   )
